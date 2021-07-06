@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Uso Api</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="Calculator.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <br />
+                <center>
+                    <h2 class="text-primary">Calculadora</h2>
+                </center>
+                <br />
+                <div class="form-group">
+                    <label class="control-laberl">
+                        Número 1:
+                    </label>
+                    <input type="text" class="form-control" id="Numero1" />
+                </div>
+                <div class="form-group">
+                    <label class="control-laberl">
+                        Número 2:
+                    </label>
+                    <input type="text" class="form-control" id="Numero2" />
+                </div>
+                <div class="form-group">
+                    <label class="control-laberl">
+                        Seleccioar Operacion
+                    </label>
+                    <select id="type" class="form-control">
+                        <option value="suma">Sumar</option>
+                        <option value="resta">Restar</option>
+                        <option value="multi">Multiplicar</option>
+                        <option value="divi">Dividir</option>
+                    </select>
+                </div>
+                <center>
+                    <button class="btn btn-success" onclick="Calcular()">Calcular</button>
+                    <button class="btn btn-danger" onclick="LimpiarForm()">Eliminar</button>
+                </center>
+                <br /><br />
+                <div id="respuestaDiv">
+                    <label>Respuesta: <b class="text-primary" id="respuesta"></b></label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $(document).ready(function ()
+        {
+            $("#respuestaDiv").hide();
+        });
+
+        function Calcular()
+        {
+            var n1 = $("#Numero1").val();
+            var n2 = $("#Numero2").val();
+            var type = $("#type").val();
+
+            var respuesta = "";
+
+            switch (type)
+            {
+                case "suma":
+                    respuesta = Operate(TypeOperation.Add,n1, n2);
+                    break;
+                case "resta":
+                    respuesta = Operate(TypeOperation.Sub, n1, n2);
+                    break;
+                case "multi":
+                    respuesta = Operate(TypeOperation.Mul, n1, n2);
+                    break;
+                case "divi":
+                    respuesta = Operate(TypeOperation.Div, n1, n2);
+                    break;
+            }
+
+            if (isNaN(respuesta))
+            {
+                console.log(respuesta.typeError);
+                alert("¡Error! " + respuesta.ErrorMessage);
+            }
+            else
+            {
+                $("#respuestaDiv").show();
+                $("#respuesta").text(respuesta.toFixed(2));
+            }
+        }
+
+        function LimpiarForm()
+        {
+            $("#Numero1").val("");
+            $("#Numero2").val("");
+            $("#respuestaDiv").hide();
+            $("#type option[value=suma]").prop('selected','selected');
+        }
+        
+    </script>
+</body>
+</html>
